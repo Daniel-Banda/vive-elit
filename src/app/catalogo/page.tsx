@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
+
 
 export default function Home() {
   const [todasLasPropiedades, setTodasLasPropiedades] = useState<any[]>([])
@@ -21,17 +22,40 @@ export default function Home() {
   })
 
   // Carga inicial de Supabase
-  useEffect(() => {
-    const fetchPropiedades = async () => {
-      const { data } = await supabase.from('propiedades').select('*')
-      if (data) {
+useEffect(() => {
+  let isMounted = true
+
+  const fetchPropiedades = async () => {
+    try {
+      const supabase = getSupabase()
+
+      const { data, error } = await supabase
+        .from('propiedades')
+        .select('*')
+
+      if (error) {
+        console.error('Error fetching propiedades:', error)
+        return
+      }
+
+      if (data && isMounted) {
         setTodasLasPropiedades(data)
         setPropiedadesFiltradas(data)
       }
-      setLoading(false)
+    } catch (err) {
+      console.error('Supabase client error:', err)
+    } finally {
+      if (isMounted) setLoading(false)
     }
-    fetchPropiedades()
-  }, [])
+  }
+
+  fetchPropiedades()
+
+  return () => {
+    isMounted = false
+  }
+}, [])
+
 
   // Cerrar menús al hacer clic fuera
   useEffect(() => {
