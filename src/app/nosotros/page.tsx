@@ -7,12 +7,12 @@ export default function Nosotros() {
           <h2 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.5em] mb-6">Quiénes Somos</h2>
           <h1 className="text-5xl md:text-7xl font-serif mb-8">Redefiniendo el lujo inmobiliario.</h1>
           <p className="text-slate-400 text-lg font-light leading-relaxed max-w-lg">
-            En ViveElit, entendemos que un hogar no es solo una estructura, es el escenario de su vida. Somos un equipo apasionado por la arquitectura y la excelencia en el servicio.
+            En Vive Elit, entendemos que un hogar no es solo una estructura, es el escenario de su vida. Somos un equipo apasionado por la arquitectura y la excelencia en el servicio.
           </p>
         </div>
         <div className="flex-1 relative min-h-[400px]">
-          <img 
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069" 
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069"
             className="absolute inset-0 w-full h-full object-cover"
             alt="Oficinas de lujo"
           />

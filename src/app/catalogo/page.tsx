@@ -9,7 +9,7 @@ export default function Home() {
   const [propiedadesFiltradas, setPropiedadesFiltradas] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [openFilter, setOpenFilter] = useState<string | null>(null)
-  
+
   const filterRef = useRef<HTMLDivElement>(null)
 
   // --- ESTADOS DE LOS FILTROS ---
@@ -22,39 +22,39 @@ export default function Home() {
   })
 
   // Carga inicial de Supabase
-useEffect(() => {
-  let isMounted = true
+  useEffect(() => {
+    let isMounted = true
 
-  const fetchPropiedades = async () => {
-    try {
-      const supabase = getSupabase()
+    const fetchPropiedades = async () => {
+      try {
+        const supabase = getSupabase()
 
-      const { data, error } = await supabase
-        .from('propiedades')
-        .select('*')
+        const { data, error } = await supabase
+          .from('propiedades')
+          .select('*')
 
-      if (error) {
-        console.error('Error fetching propiedades:', error)
-        return
+        if (error) {
+          console.error('Error fetching propiedades:', error)
+          return
+        }
+
+        if (data && isMounted) {
+          setTodasLasPropiedades(data)
+          setPropiedadesFiltradas(data)
+        }
+      } catch (err) {
+        console.error('Supabase client error:', err)
+      } finally {
+        if (isMounted) setLoading(false)
       }
-
-      if (data && isMounted) {
-        setTodasLasPropiedades(data)
-        setPropiedadesFiltradas(data)
-      }
-    } catch (err) {
-      console.error('Supabase client error:', err)
-    } finally {
-      if (isMounted) setLoading(false)
     }
-  }
 
-  fetchPropiedades()
+    fetchPropiedades()
 
-  return () => {
-    isMounted = false
-  }
-}, [])
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
 
   // Cerrar menús al hacer clic fuera
@@ -76,7 +76,7 @@ useEffect(() => {
       resultado = resultado.filter(p => filtros.ubicaciones.includes(p.Ubicacion))
     }
     if (filtros.tipos.length > 0) {
-      resultado = resultado.filter(p => 
+      resultado = resultado.filter(p =>
         filtros.tipos.some(t => p.Tipo?.toLowerCase().includes(t.toLowerCase()))
       )
     }
@@ -101,24 +101,24 @@ useEffect(() => {
     })
   }
 
-  const limpiarFiltros = () => setFiltros({ 
-    ubicaciones: [], precioMin: '50000', precioMax: '100000000', tipos: [], recamaras: [] 
+  const limpiarFiltros = () => setFiltros({
+    ubicaciones: [], precioMin: '50000', precioMax: '100000000', tipos: [], recamaras: []
   })
 
-  if (loading) return <div className="p-20 text-center font-serif text-slate-400 italic">Cargando ViveElit...</div>
+  if (loading) return <div className="p-20 text-center font-serif text-slate-400 italic">Cargando Vive Elit...</div>
 
   return (
     <main className="min-h-screen bg-white">
       {/* BARRA DE FILTROS - Sticky ajustado al Nav de 80px */}
-      <section 
-        className="border-b border-slate-100 bg-white sticky top-[80px] z-40 shadow-sm" 
+      <section
+        className="border-b border-slate-100 bg-white sticky top-[80px] z-40 shadow-sm"
         ref={filterRef}
       >
         <div className="max-w-7xl mx-auto px-8 py-4 flex flex-wrap gap-3 items-center">
-          
+
           {/* Ubicación */}
           <div className="relative">
-            <button onClick={() => setOpenFilter(openFilter === 'ubicacion' ? null : 'ubicacion')} 
+            <button onClick={() => setOpenFilter(openFilter === 'ubicacion' ? null : 'ubicacion')}
               className={`px-5 py-2.5 rounded-full border text-[11px] font-bold uppercase tracking-wider transition-all ${filtros.ubicaciones.length > 0 ? 'border-blue-600 text-blue-600 bg-blue-50' : 'text-slate-600 hover:border-slate-900'}`}>
               Ubicación {filtros.ubicaciones.length > 0 && `(${filtros.ubicaciones.length})`} ▾
             </button>
@@ -136,7 +136,7 @@ useEffect(() => {
 
           {/* Tipo */}
           <div className="relative">
-            <button onClick={() => setOpenFilter(openFilter === 'tipo' ? null : 'tipo')} 
+            <button onClick={() => setOpenFilter(openFilter === 'tipo' ? null : 'tipo')}
               className={`px-5 py-2.5 rounded-full border text-[11px] font-bold uppercase tracking-wider transition-all ${filtros.tipos.length > 0 ? 'border-blue-600 text-blue-600 bg-blue-50' : 'text-slate-600 hover:border-slate-900'}`}>
               Tipo ▾
             </button>
@@ -154,7 +154,7 @@ useEffect(() => {
 
           {/* Recámaras */}
           <div className="relative">
-            <button onClick={() => setOpenFilter(openFilter === 'recamaras' ? null : 'recamaras')} 
+            <button onClick={() => setOpenFilter(openFilter === 'recamaras' ? null : 'recamaras')}
               className={`px-5 py-2.5 rounded-full border text-[11px] font-bold uppercase tracking-wider transition-all ${filtros.recamaras.length > 0 ? 'border-blue-600 text-blue-600 bg-blue-50' : 'text-slate-600 hover:border-slate-900'}`}>
               Recámaras ▾
             </button>
@@ -174,7 +174,7 @@ useEffect(() => {
 
           {/* Presupuesto */}
           <div className="relative">
-            <button onClick={() => setOpenFilter(openFilter === 'precio' ? null : 'precio')} 
+            <button onClick={() => setOpenFilter(openFilter === 'precio' ? null : 'precio')}
               className="px-5 py-2.5 rounded-full border text-[11px] font-bold uppercase tracking-wider text-slate-600 hover:border-slate-900">
               Presupuesto ▾
             </button>
@@ -183,11 +183,11 @@ useEffect(() => {
                 <div className="flex gap-4 items-center">
                   <div className="flex-1 text-center">
                     <label className="text-[8px] font-bold text-slate-400 uppercase mb-1 block">Desde</label>
-                    <input type="number" value={filtros.precioMin} onChange={(e) => setFiltros({...filtros, precioMin: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-800 outline-none focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" value={filtros.precioMin} onChange={(e) => setFiltros({ ...filtros, precioMin: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-800 outline-none focus:ring-1 focus:ring-blue-500" />
                   </div>
                   <div className="flex-1 text-center">
                     <label className="text-[8px] font-bold text-slate-400 uppercase mb-1 block">Hasta</label>
-                    <input type="number" value={filtros.precioMax} onChange={(e) => setFiltros({...filtros, precioMax: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-800 outline-none focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" value={filtros.precioMax} onChange={(e) => setFiltros({ ...filtros, precioMax: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-800 outline-none focus:ring-1 focus:ring-blue-500" />
                   </div>
                 </div>
               </div>
@@ -201,11 +201,11 @@ useEffect(() => {
       {/* CATÁLOGO */}
       <section className="max-w-7xl mx-auto p-8 pt-12">
         <p className="mb-8 text-[10px] font-black text-slate-300 uppercase tracking-[0.5em] border-b pb-4">Mostrando {propiedadesFiltradas.length} resultados</p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {propiedadesFiltradas.map((p, i) => {
             const fotos = Array.isArray(p.Imagenes) ? p.Imagenes : [];
-            const portada = fotos.length > 0 ? fotos[0] : "https://via.placeholder.com/600x400?text=ViveElit";
+            const portada = fotos.length > 0 ? fotos[0] : "https://via.placeholder.com/600x400?text=Vive+Elit";
             const categorias = p.Tipo ? p.Tipo.split('-') : [];
 
             return (
@@ -218,8 +218,19 @@ useEffect(() => {
                     ))}
                   </div>
                   <div className="absolute bottom-3 left-3 bg-slate-900/60 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-white/10">
-                    <p className="font-bold text-base tracking-tight">${Number(p.Precio || 0).toLocaleString()}</p>
+                    <p className="font-bold text-base tracking-tight">${Number(p.Precio || 0).toLocaleString('en-US')}</p>
                   </div>
+                  {/* Surface Badge */}
+                  {(p.Superficie || p.Terreno) && (
+                    <div className="absolute bottom-3 right-3 z-10">
+                      <span className="bg-slate-900/60 backdrop-blur-md text-white text-[9px] font-semibold px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                        </svg>
+                        {p.Superficie || p.Terreno} m²
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="p-5 flex flex-col flex-grow">
                   <h3 className="text-lg font-bold text-slate-800 leading-tight mb-1 truncate">{p.Titulo}</h3>

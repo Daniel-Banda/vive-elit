@@ -9,9 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'elite-navy': '#0f172a',
-        'elite-gold': '#b8912d',
-        'elite-bg': '#f8fafc',
+        'elite-navy': '#0F3451',
+        'elite-gold': '#D5A556',
+        'elite-green': '#AED0C1',
+        'elite-offwhite': '#F1F1F1',
+        'elite-lightgray': '#F2F1F0',
       },
     },
   },
