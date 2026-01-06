@@ -24,13 +24,13 @@ export default function Anunciar() {
             {/* Left Column: Video */}
             <div className="bg-slate-50 p-8 md:p-12 flex items-center justify-center">
               <div className="relative aspect-[9/16] w-full max-w-sm bg-black rounded-2xl overflow-hidden shadow-lg border-4 border-white">
-                <video
-                  src="/videos/VenderPropiedad.mp4"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  playsInline
-                  controls
+                <iframe
+                  src="https://player.vimeo.com/video/1151781493?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&title=0&byline=0&portrait=0"
+                  className="absolute inset-0 w-full h-full"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  title="VenderPropiedad"
                 />
               </div>
             </div>
