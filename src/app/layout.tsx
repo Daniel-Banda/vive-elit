@@ -1,5 +1,26 @@
 import type { Metadata } from "next";
+import { Josefin_Slab, Tenor_Sans, Lato } from "next/font/google"; // Import fonts
 import "./globals.css";
+
+const josefin = Josefin_Slab({
+  subsets: ["latin"],
+  variable: "--font-josefin",
+  display: "swap",
+});
+
+const tenor = Tenor_Sans({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-tenor",
+  display: "swap",
+});
+
+const lato = Lato({
+  weight: ["300", "400", "700"],
+  subsets: ["latin"],
+  variable: "--font-lato",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Vive Elit | Inmobiliaria de Lujo",
@@ -12,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <body className="antialiased bg-white">
+    <html lang="es" className={`${josefin.variable} ${tenor.variable} ${lato.variable}`}>
+      <body className="antialiased bg-white font-sans">
         {/* Navbar Global - Color Sólido Oscuro (Slate 900) */}
         <nav className="fixed top-0 w-full z-50 bg-[#0F3451] text-white shadow-2xl border-b border-[#D5A556]/20">
           <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
@@ -42,15 +63,7 @@ export default function RootLayout({
               </a>
             </div>
 
-            {/* Botón de Acción Directa */}
-            <div className="flex items-center gap-4">
-              <a
-                href="tel:+523120000000"
-                className="bg-elite-gold hover:bg-[#c49626] text-elite-navy px-5 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-elite-gold/20"
-              >
-                Llamar ahora
-              </a>
-            </div>
+
 
           </div>
         </nav>

@@ -15,6 +15,11 @@ const config: Config = {
         'elite-offwhite': '#F1F1F1',
         'elite-lightgray': '#F2F1F0',
       },
+      fontFamily: {
+        serif: ['var(--font-josefin)', 'serif'],
+        sans: ['var(--font-tenor)', 'sans-serif'],
+        complementary: ['var(--font-lato)', 'sans-serif'],
+      },
     },
   },
   plugins: [],
