@@ -50,12 +50,7 @@ export default function Navbar() {
                     <Link href="/catalogo" className="hover:text-amber-400 transition-colors">
                         Encuentra tu hogar
                     </Link>
-                    <Link href="/anunciar" className="hover:text-amber-400 transition-colors">
-                        Anuncia una propiedad
-                    </Link>
-                    <Link href="/nosotros" className="hover:text-amber-400 transition-colors">
-                        Nosotros
-                    </Link>
+
                     <Link href="/contacto" className="hover:text-amber-400 transition-colors">
                         Contáctanos
                     </Link>
