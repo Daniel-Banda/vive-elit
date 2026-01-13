@@ -20,14 +20,15 @@ export default function Layout({
 
                     <div className="flex flex-wrap justify-center gap-8 text-[9px] font-bold uppercase tracking-[0.2em] text-white">
                         <a href="/catalogo" className="hover:text-white transition-colors">Propiedades</a>
-                        <a href="/nosotros" className="hover:text-white transition-colors">Privacidad</a>
+                        <a href="/privacidad" className="hover:text-white transition-colors">Privacidad</a>
+                        <a href="/cookies" className="hover:text-white transition-colors">Cookies</a>
                         <a href="/contacto" className="hover:text-white transition-colors">Soporte</a>
                     </div>
 
                     <div className="h-[1px] w-20 bg-elite-gold/30"></div>
 
                     <p className="text-white text-[10px] uppercase tracking-[0.3em] font-medium text-center">
-                        © 2025 Vive Elit Inmobiliaria. <br className="md:hidden" />
+                        © 2025 VIVE ELIT GRUPO INMOBILIARIO. <br className="md:hidden" />
                         Todos los derechos reservados.
                     </p>
                 </div>

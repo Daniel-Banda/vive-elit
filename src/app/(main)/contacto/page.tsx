@@ -1,3 +1,5 @@
+import WhatsAppForm from "@/components/WhatsAppForm";
+
 export default function Contacto() {
   return (
     <main className="min-h-screen bg-slate-50 pt-32 pb-20 px-8">
@@ -30,20 +32,9 @@ export default function Contacto() {
             </div>
           </div>
 
+
           {/* Form */}
-          <div className="flex-1 p-12 md:p-20">
-            <h1 className="text-4xl font-serif text-slate-900 mb-8">¿En qué podemos <br /> asistirle hoy?</h1>
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" placeholder="Nombre" className="w-full border-b border-slate-200 py-4 outline-none focus:border-blue-600 transition" />
-                <input type="email" placeholder="Correo electrónico" className="w-full border-b border-slate-200 py-4 outline-none focus:border-blue-600 transition" />
-              </div>
-              <textarea placeholder="Mensaje" rows={4} className="w-full border-b border-slate-200 py-4 outline-none focus:border-blue-600 transition"></textarea>
-              <button className="bg-slate-900 text-white px-12 py-4 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-blue-600 transition-all mt-8">
-                Enviar Mensaje
-              </button>
-            </div>
-          </div>
+          <WhatsAppForm />
         </div>
       </div>
     </main>

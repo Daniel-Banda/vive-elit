@@ -1,15 +1,16 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { getSupabase } from '@/lib/supabase'
+import { useSearchParams } from 'next/navigation'
 
-
-export default function Home() {
+function CatalogContent() {
   const [todasLasPropiedades, setTodasLasPropiedades] = useState<any[]>([])
   const [propiedadesFiltradas, setPropiedadesFiltradas] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [openFilter, setOpenFilter] = useState<string | null>(null)
 
+  const searchParams = useSearchParams()
   const filterRef = useRef<HTMLDivElement>(null)
 
   // --- ESTADOS DE LOS FILTROS ---
@@ -18,7 +19,8 @@ export default function Home() {
     precioMin: '50000',
     precioMax: '100000000',
     tipos: [] as string[],
-    recamaras: [] as number[]
+    recamaras: [] as number[],
+    busqueda: ''
   })
 
   // Carga inicial de Supabase
@@ -56,6 +58,26 @@ export default function Home() {
     }
   }, [])
 
+  // Parse URL Params
+  useEffect(() => {
+    if (!searchParams) return
+
+    const term = searchParams.get('term')
+    const recs = searchParams.get('recamaras')?.split(',').map(Number)
+    const minP = searchParams.get('minPrice')
+    const maxP = searchParams.get('maxPrice')
+
+    if (term || recs || minP || maxP) {
+      setFiltros(prev => ({
+        ...prev,
+        busqueda: term || '',
+        recamaras: recs || [],
+        precioMin: minP || '50000',
+        precioMax: maxP || '100000000'
+      }))
+    }
+  }, [searchParams])
+
 
   // Cerrar menús al hacer clic fuera
   useEffect(() => {
@@ -71,6 +93,16 @@ export default function Home() {
   // --- LÓGICA DE FILTRADO ---
   useEffect(() => {
     let resultado = todasLasPropiedades
+
+    // Filtro de Texto (Búsqueda)
+    if (filtros.busqueda) {
+      const term = filtros.busqueda.toLowerCase()
+      resultado = resultado.filter(p =>
+        (p.Titulo && p.Titulo.toLowerCase().includes(term)) ||
+        (p.Ubicacion && p.Ubicacion.toLowerCase().includes(term)) ||
+        (p.Tipo && p.Tipo.toLowerCase().includes(term))
+      )
+    }
 
     if (filtros.ubicaciones.length > 0) {
       resultado = resultado.filter(p => filtros.ubicaciones.includes(p.Ubicacion))
@@ -102,7 +134,7 @@ export default function Home() {
   }
 
   const limpiarFiltros = () => setFiltros({
-    ubicaciones: [], precioMin: '50000', precioMax: '100000000', tipos: [], recamaras: []
+    ubicaciones: [], precioMin: '50000', precioMax: '100000000', tipos: [], recamaras: [], busqueda: ''
   })
 
   if (loading) return <div className="p-20 text-center font-serif text-slate-400 italic">Cargando Vive Elit...</div>
@@ -115,6 +147,17 @@ export default function Home() {
         ref={filterRef}
       >
         <div className="max-w-7xl mx-auto px-8 py-4 flex flex-wrap gap-3 items-center">
+
+          {/* Busqueda Texto */}
+          <div className="relative flex-1 min-w-[200px] max-w-sm border-r border-slate-100 pr-4 mr-2">
+            <input
+              type="text"
+              placeholder="Buscar por nombre, zona..."
+              value={filtros.busqueda}
+              onChange={(e) => setFiltros({ ...filtros, busqueda: e.target.value })}
+              className="w-full text-sm font-medium text-slate-800 focus:outline-none placeholder-slate-400"
+            />
+          </div>
 
           {/* Ubicación */}
           <div className="relative">
@@ -194,7 +237,9 @@ export default function Home() {
             )}
           </div>
 
-          <button onClick={limpiarFiltros} className="text-[10px] font-bold uppercase text-blue-600 ml-auto hover:underline transition-all">Limpiar Filtros</button>
+          <button onClick={limpiarFiltros} className="px-5 py-2.5 ml-auto rounded-full bg-slate-900 text-[10px] font-bold uppercase tracking-wider text-white hover:bg-slate-800 transition-all shadow-md hover:shadow-lg">
+            Limpiar Filtros
+          </button>
         </div>
       </section>
 
@@ -250,5 +295,13 @@ export default function Home() {
         </div>
       </section>
     </main>
+  )
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="p-20 text-center font-serif text-slate-400 italic">Cargando...</div>}>
+      <CatalogContent />
+    </Suspense>
   )
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Josefin_Slab, Tenor_Sans, Lato } from "next/font/google"; // Import fonts
+import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
 const josefin = Josefin_Slab({
@@ -25,6 +26,9 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "Vive Elit | Inmobiliaria de Lujo",
   description: "Más de 500 propiedades exclusivas a tu alcance",
+  icons: {
+    icon: '/images/favicon.png',
+  },
 };
 
 export default function RootLayout({
@@ -36,6 +40,7 @@ export default function RootLayout({
     <html lang="es" className={`${josefin.variable} ${tenor.variable} ${lato.variable}`}>
       <body className="antialiased bg-white font-sans">
         {children}
+        <CookieConsent />
       </body>
     </html>
   );
