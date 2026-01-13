@@ -1,75 +1,80 @@
-import WhatsAppForm from "@/components/WhatsAppForm";
-
-export const metadata = {
-    title: "Anuncia tu Propiedad | Vive Elit",
-    description: "Confía en los expertos para la venta de tu propiedad inmobiliaria.",
-};
-
-export default function AnunciarPage() {
+export default function Anunciar() {
     return (
-        <div className="bg-white min-h-screen pt-32 pb-20">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="mb-12 text-center">
-                    <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em] mb-4">
-                        Vende con Nosotros
-                    </span>
-                    <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-6">
-                        Anuncia tu Propiedad
-                    </h1>
-                    <p className="text-lg text-slate-600 font-light max-w-2xl mx-auto leading-relaxed">
-                        Permítenos ayudarte a encontrar el comprador ideal. Nuestra estrategia de marketing y red de contactos garantizan la mejor exposición para tu inmueble.
-                    </p>
-                </div>
+        <main className="min-h-screen bg-white">
+            {/* Hero Section */}
+            <section className="bg-slate-900 pt-32 pb-20 px-8 text-center text-white">
+                <h2 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.5em] mb-4">Servicio Premium</h2>
+                <h1 className="text-4xl md:text-6xl font-serif italic mb-6">Su propiedad merece <br /> una audiencia global.</h1>
+                <p className="max-w-2xl mx-auto text-slate-400 font-light text-lg">Utilizamos marketing de alta gama y fotografía cinematográfica para posicionar su inmueble ante los compradores más exigentes.</p>
+            </section>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                    {/* Left Column: Video */}
-                    <div className="space-y-8">
-                        <div className="relative aspect-video rounded-2xl overflow-hidden shadow-xl bg-slate-100">
-                            <iframe
-                                src="https://player.vimeo.com/video/1151781493?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                                frameBorder="0"
-                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-                                className="absolute top-0 left-0 w-full h-full"
-                                title="VIVE ELIT"
-                            ></iframe>
-                        </div>
-
-                        <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100">
-                            <h3 className="font-serif text-2xl text-slate-900 mb-4">¿Por qué elegir Vive Elit?</h3>
-                            <ul className="space-y-4">
-                                <li className="flex items-start gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold shrink-0">1</div>
-                                    <div>
-                                        <h4 className="font-bold text-slate-900 text-sm uppercase tracking-wide mb-1">Valoración Profesional</h4>
-                                        <p className="text-slate-600 text-sm font-light">Analizamos el mercado para definir el precio correcto.</p>
-                                    </div>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold shrink-0">2</div>
-                                    <div>
-                                        <h4 className="font-bold text-slate-900 text-sm uppercase tracking-wide mb-1">Marketing Premium</h4>
-                                        <p className="text-slate-600 text-sm font-light">Fotografía profesional, video y campañas dirigidas.</p>
-                                    </div>
-                                </li>
-                                <li className="flex items-start gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold shrink-0">3</div>
-                                    <div>
-                                        <h4 className="font-bold text-slate-900 text-sm uppercase tracking-wide mb-1">Gestión Integral</h4>
-                                        <p className="text-slate-600 text-sm font-light">Nos encargamos de todo el proceso legal y administrativo.</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+            {/* Formulario */}
+            <section className="max-w-7xl mx-auto -mt-16 px-6 pb-20">
+                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
+                    <div className="p-8 md:p-12 pb-0 text-center">
+                        <h3 className="text-base font-black text-blue-500 uppercase tracking-widest mb-4">¿Cómo funciona?</h3>
+                        <h2 className="text-4xl font-serif text-slate-900 mb-4">Un proceso transparente y efectivo.</h2>
+                        <p className="text-lg text-slate-600 font-light leading-relaxed max-w-2xl mx-auto">
+                            Déjenos sus datos y nos pondremos en contacto para realizar una valoración detallada de su propiedad.
+                            Nuestro equipo se encargará de crear una estrategia de venta personalizada.
+                        </p>
                     </div>
 
-                    {/* Right Column: Form */}
-                    <div className="lg:pl-8">
-                        <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 sticky top-32">
-                            <WhatsAppForm />
+                    <div className="grid grid-cols-1 md:grid-cols-2">
+                        {/* Left Column: Video */}
+                        <div className="bg-slate-50 p-8 md:p-12 flex items-center justify-center">
+                            <div className="relative aspect-[9/16] w-full max-w-sm bg-black rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+                                <iframe
+                                    src="https://player.vimeo.com/video/1151781493?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&title=0&byline=0&portrait=0"
+                                    className="absolute inset-0 w-full h-full"
+                                    frameBorder="0"
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                                    referrerPolicy="strict-origin-when-cross-origin"
+                                    title="VenderPropiedad"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Right Column: Form */}
+                        <div className="p-8 md:p-12">
+                            <form className="grid grid-cols-1 gap-6">
+                                <div>
+                                    <h3 className="text-2xl font-bold text-slate-900 border-b pb-4 mb-4">Datos del Propietario</h3>
+                                </div>
+                                <div>
+                                    <label className="text-[11px] font-black uppercase text-slate-400 tracking-widest block mb-2">Nombre Completo</label>
+                                    <input type="text" className="w-full bg-slate-50 border border-slate-100 rounded-xl p-4 outline-none focus:ring-1 focus:ring-blue-600 transition" />
+                                </div>
+                                <div>
+                                    <label className="text-[11px] font-black uppercase text-slate-400 tracking-widest block mb-2">WhatsApp / Teléfono</label>
+                                    <input type="tel" className="w-full bg-slate-50 border border-slate-100 rounded-xl p-4 outline-none focus:ring-1 focus:ring-blue-600 transition" />
+                                </div>
+                                <div className="mt-4">
+                                    <h3 className="text-2xl font-bold text-slate-900 border-b pb-4 mb-4">Información del Inmueble</h3>
+                                </div>
+                                <div>
+                                    <label className="text-[11px] font-black uppercase text-slate-400 tracking-widest block mb-2">Ubicación</label>
+                                    <select className="w-full bg-slate-50 border border-slate-100 rounded-xl p-4 outline-none">
+                                        <option>Colima</option>
+                                        <option>Manzanillo</option>
+                                        <option>Guadalajara</option>
+                                        <option>Otro</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[11px] font-black uppercase text-slate-400 tracking-widest block mb-2">Valor Estimado (MXN)</label>
+                                    <input type="number" className="w-full bg-slate-50 border border-slate-100 rounded-xl p-4 outline-none" placeholder="$ 0.00" />
+                                </div>
+                                <div className="mt-4">
+                                    <button className="w-full bg-slate-900 text-white font-bold text-[13px] uppercase tracking-[0.3em] py-5 rounded-2xl hover:bg-blue-600 transition-all shadow-xl shadow-blue-900/10">
+                                        Iniciar Proceso
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    );
+            </section>
+        </main>
+    )
 }
