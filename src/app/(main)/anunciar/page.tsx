@@ -57,7 +57,7 @@ Valor Estimado: $${formData.valor}`;
                         <div className="bg-slate-50 p-8 md:p-12 flex items-center justify-center">
                             <div className="relative aspect-[9/16] w-full max-w-sm bg-black rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                                 <iframe
-                                    src="https://player.vimeo.com/video/1154190385?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0"
+                                    src="https://player.vimeo.com/video/1154190385?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&autoplay=1&muted=1"
                                     className="absolute inset-0 w-full h-full"
                                     frameBorder="0"
                                     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
