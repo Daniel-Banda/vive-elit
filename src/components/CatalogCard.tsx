@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 
+import Link from 'next/link';
+
 interface Property {
+    ID?: number;
     Titulo: string;
     Ubicacion: string;
     Precio: number;
@@ -119,9 +122,24 @@ export default function CatalogCard({ property, onImageClick }: CatalogCardProps
                     <span>🚗 {property.Parking} Pkg.</span>
                     {property.Construccion && <span>🏗️ {property.Construccion} m²</span>}
                 </div>
-                <button className="w-full mt-4 bg-slate-900 hover:bg-blue-700 text-white text-[11px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300">
-                    Agenda una visita
-                </button>
+
+                {property.ID === 2 ? (
+                    <div className="mt-4 grid grid-cols-2 gap-2">
+                        <Link
+                            href="/SantosChocano"
+                            className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300 text-center flex items-center justify-center shadow-md hover:shadow-lg"
+                        >
+                            Ver Más
+                        </Link>
+                        <button className="bg-slate-900 hover:bg-slate-800 text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300 flex items-center justify-center">
+                            Visitar
+                        </button>
+                    </div>
+                ) : (
+                    <button className="w-full mt-4 bg-slate-900 hover:bg-blue-700 text-white text-[11px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300">
+                        Agenda una visita
+                    </button>
+                )}
             </div>
         </div>
     );

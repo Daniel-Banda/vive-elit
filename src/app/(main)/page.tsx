@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-// import PropertyCard from '@/components/PropertyCard'; // We are using a custom card layout for the new home design
+import CatalogCard from '@/components/CatalogCard';
 import { getSupabase } from '@/lib/supabase';
 
 export default function Inicio() {
@@ -14,6 +14,11 @@ export default function Inicio() {
   const [searchTerm, setSearchTerm] = useState('');
   const [location, setLocation] = useState('');
   const [budget, setBudget] = useState('');
+
+  // Lightbox State
+  const [openLightbox, setOpenLightbox] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -55,27 +60,7 @@ export default function Inicio() {
         }
 
         if (data) {
-          // Helper for case-insensitive comparison
-          const normalize = (s: string) => s ? s.toLowerCase().trim() : '';
-
-          // No sorting needed if we just want the latest/default order
-          const sortedData = data;
-
-          // Map Supabase data to our UI model
-          const mappedData = sortedData.map((p: any, index: number) => ({
-            id: p.id || index.toString(),
-            title: p.Titulo,
-            price: `$${Number(p.Precio).toLocaleString('en-US')}`,
-            location: p.Ubicacion,
-            specs: `${p.Recamaras} Rec · ${p.WC} Baños`,
-            surface: `${p.Superficie || p.Terreno || 0} m²`,
-            image: Array.isArray(p.Imagenes) && p.Imagenes.length > 0
-              ? p.Imagenes[0]
-              : 'https://via.placeholder.com/800x600?text=No+Image',
-            tag: index === 0 ? 'Destacado' : (index === 1 ? 'Nuevo' : undefined),
-            featured: index === 0 // First item is featured
-          }));
-          setLatestProperties(mappedData);
+          setLatestProperties(data);
         }
       } catch (err) {
         console.error('Unexpected error:', err);
@@ -192,31 +177,17 @@ export default function Inicio() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {latestProperties.map((prop) => (
-                  <div key={prop.id} className="group cursor-pointer">
-                    <div className="relative overflow-hidden aspect-[4/5] bg-gray-100 mb-4 rounded-sm">
-                      <img
-                        src={prop.image}
-                        alt={prop.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-
-                      {/* Hover Action */}
-                      <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center">
-                        <span className="bg-white text-black px-6 py-2 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
-                          Ver Propiedad
-                        </span>
-                      </div>
-                    </div>
-
-                    <h3 className="text-lg font-serif text-slate-900 leading-tight mb-1">{prop.title}</h3>
-                    <div className="flex justify-between items-center border-t border-slate-100 pt-2 mt-2">
-                      <span className="text-slate-500 text-sm font-light">{prop.price}</span>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{prop.surface}</span>
-                    </div>
-                  </div>
+                  <CatalogCard
+                    key={prop.id || prop.ID}
+                    property={prop}
+                    onImageClick={(images, index) => {
+                      setLightboxImages(images);
+                      setLightboxIndex(index);
+                      setOpenLightbox(true);
+                    }}
+                  />
                 ))}
               </div>
 
@@ -254,8 +225,71 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/* SECTION 4: INTERIORS / DETAILS */}
+      {/* LIGHTBOX */}
+      {openLightbox && (
+        <div
+          className="fixed inset-0 z-50 bg-black/[0.85] flex items-center justify-center p-4 backdrop-blur-sm"
+          onClick={() => setOpenLightbox(false)}
+        >
+          <button
+            onClick={() => setOpenLightbox(false)}
+            className="absolute top-4 right-4 text-white hover:text-white/80 p-2 z-50"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
 
+          <div
+            className="relative w-full max-w-5xl h-full max-h-[85vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightboxImages[lightboxIndex]}
+              alt="Galería"
+              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+              onContextMenu={(e) => e.preventDefault()}
+              draggable={false}
+            />
+
+            {lightboxImages.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex(prev => prev === 0 ? lightboxImages.length - 1 : prev - 1);
+                  }}
+                  className="absolute left-0 md:-left-12 lg:-left-20 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex(prev => prev === lightboxImages.length - 1 ? 0 : prev + 1);
+                  }}
+                  className="absolute right-0 md:-right-12 lg:-right-20 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </button>
+              </>
+            )}
+
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {lightboxImages.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`w-2 h-2 rounded-full transition-all ${idx === lightboxIndex ? 'bg-white scale-125' : 'bg-white/30'}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
     </main>
   );
