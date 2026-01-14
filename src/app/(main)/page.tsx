@@ -43,22 +43,11 @@ export default function Inicio() {
       try {
         const supabase = getSupabase();
 
-        // Desired order of properties by Title
-        const desiredTitles = [
-          'Casa 2',
-          'Casa de prueba',
-          'Terreno 5',
-          'Casa 3'
-        ];
-
-        // Fetch specific properties using case-insensitive OR filter
-        // Construct filter string: "Titulo.ilike.val1,Titulo.ilike.val2,..."
-        const queryFilter = desiredTitles.map(t => `Titulo.ilike.${t}`).join(',');
-
+        // Fetch latest 4 properties
         const { data, error } = await supabase
-          .from('propiedades')
+          .from('Propiedades')
           .select('*')
-          .or(queryFilter);
+          .limit(4);
 
         if (error) {
           console.error('Error fetching properties for home:', error);
@@ -69,12 +58,8 @@ export default function Inicio() {
           // Helper for case-insensitive comparison
           const normalize = (s: string) => s ? s.toLowerCase().trim() : '';
 
-          // Sort data to match desireTitles order exactly (case-insensitive)
-          const sortedData = (data as any[]).sort((a, b) => {
-            const indexA = desiredTitles.findIndex(t => normalize(t) === normalize(a.Titulo));
-            const indexB = desiredTitles.findIndex(t => normalize(t) === normalize(b.Titulo));
-            return indexA - indexB;
-          });
+          // No sorting needed if we just want the latest/default order
+          const sortedData = data;
 
           // Map Supabase data to our UI model
           const mappedData = sortedData.map((p: any, index: number) => ({

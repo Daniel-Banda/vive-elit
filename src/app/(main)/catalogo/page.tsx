@@ -3,12 +3,18 @@
 import { useState, useEffect, useRef, Suspense } from 'react'
 import { getSupabase } from '@/lib/supabase'
 import { useSearchParams } from 'next/navigation'
+import CatalogCard from '@/components/CatalogCard'
 
 function CatalogContent() {
   const [todasLasPropiedades, setTodasLasPropiedades] = useState<any[]>([])
   const [propiedadesFiltradas, setPropiedadesFiltradas] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [openFilter, setOpenFilter] = useState<string | null>(null)
+
+  // Lightbox State
+  const [openLightbox, setOpenLightbox] = useState(false)
+  const [lightboxImages, setLightboxImages] = useState<string[]>([])
+  const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const searchParams = useSearchParams()
   const filterRef = useRef<HTMLDivElement>(null)
@@ -32,7 +38,7 @@ function CatalogContent() {
         const supabase = getSupabase()
 
         const { data, error } = await supabase
-          .from('propiedades')
+          .from('Propiedades')
           .select('*')
 
         if (error) {
@@ -243,55 +249,86 @@ function CatalogContent() {
         </div>
       </section>
 
+      {/* LIGHTBOX */}
+      {openLightbox && (
+        <div
+          className="fixed inset-0 z-50 bg-black/[0.85] flex items-center justify-center p-4 backdrop-blur-sm"
+          onClick={() => setOpenLightbox(false)}
+        >
+          <button
+            onClick={() => setOpenLightbox(false)}
+            className="absolute top-4 right-4 text-white hover:text-white/80 p-2 z-50"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          <div
+            className="relative w-full max-w-5xl h-full max-h-[85vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightboxImages[lightboxIndex]}
+              alt="Galería"
+              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+            />
+
+            {lightboxImages.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex(prev => prev === 0 ? lightboxImages.length - 1 : prev - 1);
+                  }}
+                  className="absolute left-0 md:-left-12 lg:-left-20 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex(prev => prev === lightboxImages.length - 1 ? 0 : prev + 1);
+                  }}
+                  className="absolute right-0 md:-right-12 lg:-right-20 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </button>
+              </>
+            )}
+
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {lightboxImages.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`w-2 h-2 rounded-full transition-all ${idx === lightboxIndex ? 'bg-white scale-125' : 'bg-white/30'}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* CATÁLOGO */}
       <section className="max-w-7xl mx-auto p-8 pt-12">
         <p className="mb-8 text-[10px] font-black text-slate-300 uppercase tracking-[0.5em] border-b pb-4">Mostrando {propiedadesFiltradas.length} resultados</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {propiedadesFiltradas.map((p, i) => {
-            const fotos = Array.isArray(p.Imagenes) ? p.Imagenes : [];
-            const portada = fotos.length > 0 ? fotos[0] : "https://via.placeholder.com/600x400?text=Vive+Elit";
-            const categorias = p.Tipo ? p.Tipo.split('-') : [];
-
-            return (
-              <div key={i} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-100 flex flex-col">
-                <div className="relative h-64 overflow-hidden">
-                  <img src={portada} alt={p.Titulo} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-                  <div className="absolute top-3 left-3 flex gap-1">
-                    {categorias.map((cat: string, idx: number) => (
-                      <span key={idx} className="bg-slate-900/60 backdrop-blur-md text-white text-[9px] font-semibold px-2 py-1 rounded uppercase tracking-wider">{cat.trim()}</span>
-                    ))}
-                  </div>
-                  <div className="absolute bottom-3 left-3 bg-slate-900/60 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-white/10">
-                    <p className="font-bold text-base tracking-tight">${Number(p.Precio || 0).toLocaleString('en-US')}</p>
-                  </div>
-                  {/* Surface Badge */}
-                  {(p.Superficie || p.Terreno) && (
-                    <div className="absolute bottom-3 right-3 z-10">
-                      <span className="bg-slate-900/60 backdrop-blur-md text-white text-[9px] font-semibold px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-                        </svg>
-                        {p.Superficie || p.Terreno} m²
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="p-5 flex flex-col flex-grow">
-                  <h3 className="text-lg font-bold text-slate-800 leading-tight mb-1 truncate">{p.Titulo}</h3>
-                  <p className="text-slate-400 text-[11px] uppercase tracking-widest flex items-center gap-1 mb-4">📍 {p.Ubicacion}</p>
-                  <div className="py-3 border-t border-slate-50 flex justify-between items-center text-[11px] text-slate-500 font-medium">
-                    <span>🛏️ {p.Recamaras} Rec.</span>
-                    <span>🚿 {p.WC} Baños</span>
-                    <span>🚗 {p.Parking} Pkg.</span>
-                  </div>
-                  <button className="w-full mt-4 bg-slate-900 hover:bg-blue-700 text-white text-[11px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300">
-                    Agenda una visita
-                  </button>
-                </div>
-              </div>
-            )
-          })}
+          {propiedadesFiltradas.map((p, i) => (
+            <CatalogCard
+              key={i}
+              property={p}
+              onImageClick={(images, index) => {
+                setLightboxImages(images);
+                setLightboxIndex(index);
+                setOpenLightbox(true);
+              }}
+            />
+          ))}
         </div>
       </section>
     </main>
