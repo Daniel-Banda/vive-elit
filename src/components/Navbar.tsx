@@ -12,6 +12,9 @@ export default function Navbar() {
     // State for mobile menu
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    // State to handle scroll effect on Home
+    const [scrolled, setScrolled] = useState(false);
+
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
