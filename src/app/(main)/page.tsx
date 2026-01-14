@@ -48,11 +48,11 @@ export default function Inicio() {
       try {
         const supabase = getSupabase();
 
-        // Fetch latest 4 properties
+        // Fetch specific properties for "Colección Exclusiva"
         const { data, error } = await supabase
           .from('Propiedades')
           .select('*')
-          .limit(4);
+          .in('ID', [1, 2, 3, 4]);
 
         if (error) {
           console.error('Error fetching properties for home:', error);
@@ -60,7 +60,13 @@ export default function Inicio() {
         }
 
         if (data) {
-          setLatestProperties(data);
+          // Enforce specific order: 2, 1, 3, 4
+          const order = [2, 1, 3, 4];
+          const sortedData = data.sort((a: any, b: any) => {
+            return order.indexOf(a.ID) - order.indexOf(b.ID);
+          });
+
+          setLatestProperties(sortedData);
         }
       } catch (err) {
         console.error('Unexpected error:', err);
@@ -161,7 +167,7 @@ export default function Inicio() {
       {/* SECTION 2: CATALOG / PROPERTIES */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
             <div>
               <h2 className="text-4xl md:text-5xl font-serif text-slate-900 mb-2">Colección Exclusiva</h2>
               <div className="h-1 w-20 bg-slate-900"></div>
@@ -177,7 +183,7 @@ export default function Inicio() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {latestProperties.map((prop) => (
                   <CatalogCard
                     key={prop.id || prop.ID}
