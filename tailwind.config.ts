@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         'elite-navy': '#0F3451',
         'elite-gold': '#D5A556',
-        'elite-green': '#AED0C1',
+        'elite-green': '#B0D1C7',
         'elite-offwhite': '#F1F1F1',
         'elite-lightgray': '#F2F1F0',
       },

@@ -127,16 +127,30 @@ export default function CatalogCard({ property, onImageClick }: CatalogCardProps
                     <div className="mt-4 grid grid-cols-2 gap-2">
                         <Link
                             href="/SantosChocano"
-                            className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300 text-center flex items-center justify-center shadow-md hover:shadow-lg"
+                            className="bg-[#B0D1C7] hover:bg-slate-900 text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300 text-center flex items-center justify-center shadow-md hover:shadow-lg"
                         >
                             Ver Más
                         </Link>
-                        <button className="bg-slate-900 hover:bg-slate-800 text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300 flex items-center justify-center">
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                const message = `Hola, me interesa visitar la propiedad: ${property.Titulo}`;
+                                window.open(`https://wa.me/523121222277?text=${encodeURIComponent(message)}`, '_blank');
+                            }}
+                            className="bg-slate-900 hover:bg-[#B0D1C7] text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300 flex items-center justify-center"
+                        >
                             Visitar
                         </button>
                     </div>
                 ) : (
-                    <button className="w-full mt-4 bg-slate-900 hover:bg-blue-700 text-white text-[11px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            const message = `Hola, me interesa agendar una visita para: ${property.Titulo}`;
+                            window.open(`https://wa.me/523121222277?text=${encodeURIComponent(message)}`, '_blank');
+                        }}
+                        className="w-full mt-4 bg-slate-900 hover:bg-[#B0D1C7] text-white text-[11px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300"
+                    >
                         Agenda una visita
                     </button>
                 )}
