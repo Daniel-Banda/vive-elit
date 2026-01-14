@@ -9,8 +9,8 @@ export default function Navbar() {
     const pathname = usePathname();
     const isHome = pathname === '/';
 
-    // State to handle scroll effect on Home (start transparent, become solid on scroll)
-    const [scrolled, setScrolled] = useState(false);
+    // State for mobile menu
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,13 +23,14 @@ export default function Navbar() {
         }
     }, [isHome]);
 
-    // Dynamic classes
-    // If Home and not scrolled: Transparent, Absolute
-    // If Home and Scrolled: Solid Black/Blue, Fixed
-    // If Not Home: Solid Blue, Fixed
+    // Close menu on route change
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [pathname]);
 
+    // Dynamic classes
     const navClass = isHome
-        ? (scrolled
+        ? (scrolled || isMenuOpen
             ? "fixed top-0 w-full z-50 bg-[#0F3451]/95 backdrop-blur-sm text-white shadow-2xl transition-all duration-300 border-b border-[#D5A556]/20"
             : "fixed top-0 w-full z-50 bg-transparent text-white transition-all duration-300 border-b border-transparent")
         : "fixed top-0 w-full z-50 bg-[#0F3451] text-white shadow-2xl border-b border-[#D5A556]/20";
@@ -50,7 +51,7 @@ export default function Navbar() {
                     />
                 </Link>
 
-                {/* Menú de Navegación */}
+                {/* Desktop Navigation */}
                 <div className="hidden lg:flex gap-6 text-[11.5px] font-black uppercase tracking-[0.15em] text-elite-lightgray">
                     <Link href="/" className="hover:text-amber-400 transition-colors">
                         Inicio
@@ -61,8 +62,43 @@ export default function Navbar() {
                     <Link href="/anunciar" className="hover:text-amber-400 transition-colors">
                         Anuncia tu propiedad
                     </Link>
-
                     <Link href="/contacto" className="hover:text-amber-400 transition-colors">
+                        Contáctanos
+                    </Link>
+                </div>
+
+                {/* Mobile Menu Button (Hamburger) */}
+                <button
+                    className="lg:hidden text-white p-2 focus:outline-none"
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    aria-label="Toggle menu"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                        {isMenuOpen ? (
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        ) : (
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        )}
+                    </svg>
+                </button>
+            </div>
+
+            {/* Mobile Navigation Overlay */}
+            <div
+                className={`lg:hidden fixed inset-x-0 top-20 bg-[#0F3451]/95 backdrop-blur-md border-b border-[#D5A556]/20 transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    }`}
+            >
+                <div className="flex flex-col items-center gap-6 py-8 text-[11.5px] font-black uppercase tracking-[0.15em] text-elite-lightgray">
+                    <Link href="/" className="hover:text-amber-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                        Inicio
+                    </Link>
+                    <Link href="/catalogo" className="hover:text-amber-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                        Encuentra tu hogar
+                    </Link>
+                    <Link href="/anunciar" className="hover:text-amber-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                        Anuncia tu propiedad
+                    </Link>
+                    <Link href="/contacto" className="hover:text-amber-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
                         Contáctanos
                     </Link>
                 </div>

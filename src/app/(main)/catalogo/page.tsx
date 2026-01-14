@@ -173,7 +173,7 @@ function CatalogContent() {
             </button>
             {openFilter === 'ubicacion' && (
               <div className="absolute top-14 left-0 w-64 bg-white shadow-2xl rounded-2xl p-6 border border-slate-100 z-50">
-                {['Colima', 'Tecomán', 'Manzanillo', 'Guadalajara'].map((loc) => (
+                {['Colima', 'Villa de Álvarez', 'Manzanillo'].map((loc) => (
                   <label key={loc} className="flex items-center gap-3 mb-4 cursor-pointer group">
                     <input type="checkbox" checked={filtros.ubicaciones.includes(loc)} onChange={() => toggleSelection('ubicaciones', loc)} className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
                     <span className="text-sm text-slate-600 group-hover:text-slate-900 font-medium">{loc}</span>
@@ -272,6 +272,8 @@ function CatalogContent() {
               src={lightboxImages[lightboxIndex]}
               alt="Galería"
               className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+              onContextMenu={(e) => e.preventDefault()}
+              draggable={false}
             />
 
             {lightboxImages.length > 1 && (

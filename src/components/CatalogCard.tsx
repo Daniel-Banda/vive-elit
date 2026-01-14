@@ -49,6 +49,8 @@ export default function CatalogCard({ property, onImageClick }: CatalogCardProps
                     alt={property.Titulo}
                     className="w-full h-full object-cover transition-transform duration-1000 cursor-pointer"
                     onClick={() => onImageClick(fotos, currentImageIndex)}
+                    onContextMenu={(e) => e.preventDefault()}
+                    draggable={false}
                 />
 
                 {/* Carousel Controls */}

@@ -23,6 +23,8 @@ export default function AdvisorCard({ name, photoUrl, description, email, phone,
                             alt={name}
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            onContextMenu={(e) => e.preventDefault()}
+                            draggable={false}
                         />
                     </div>
                     <div>

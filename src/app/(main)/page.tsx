@@ -141,9 +141,8 @@ export default function Inicio() {
               >
                 <option>Cualquiera</option>
                 <option>Colima</option>
-                <option>Tecomán</option>
+                <option>Villa de Álvarez</option>
                 <option>Manzanillo</option>
-                <option>Guadalajara</option>
               </select>
             </div>
 
