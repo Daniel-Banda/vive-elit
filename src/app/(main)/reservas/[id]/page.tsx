@@ -10,7 +10,7 @@ const PROJECTS = [
         ubicacion: "Zona Norte",
         imagen: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
         descripcion: "Exclusivo desarrollo residencial con áreas verdes, seguridad 24/7 y amenidades de primera clase. Ideal para familias buscando confort y tranquilidad.",
-        calendarUrl: "https://calendar.app.google/3dthuck1woww2o7v9"
+        calendarUrl: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ10qo9TgBuK854gDLpC0Kqk6_oZDolq0bycOBkRDk-sEEFf64ky40D7_4zMwVkDc95Q1h5LOsqi?gv=true"
     },
     {
         id: "magisterial-nogueras",
@@ -76,7 +76,7 @@ export default async function ProjectReservationPage({ params }: { params: Promi
 
                     {/* Formulario/Integración de Sistema de Reservas */}
                     {project.calendarUrl ? (
-                        <div className="w-full h-[700px] md:h-[800px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-white relative">
+                        <div className="w-full h-[600px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-white relative">
                             {/* Loading State Overlay (Optional, but good for UX while iframe loads) */}
                             <div className="absolute inset-0 flex items-center justify-center bg-slate-50 z-0">
                                 <div className="flex flex-col items-center gap-3">
