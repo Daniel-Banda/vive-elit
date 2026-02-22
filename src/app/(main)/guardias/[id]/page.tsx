@@ -43,15 +43,9 @@ export default async function ProjectReservationPage({ params }: { params: Promi
                 />
 
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center">
-                    <span className="bg-white/20 backdrop-blur-md text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-6">
-                        {project.ubicacion}
-                    </span>
                     <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-white mb-6 leading-tight drop-shadow-lg">
                         {project.titulo}
                     </h1>
-                    <p className="text-white/90 text-lg md:text-xl max-w-2xl font-light drop-shadow-md">
-                        {project.descripcion}
-                    </p>
                 </div>
             </div>
 
