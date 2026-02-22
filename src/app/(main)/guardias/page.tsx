@@ -5,7 +5,7 @@ const PROJECTS = [
         id: "san-angel",
         titulo: "San Angel",
         ubicacion: "Zona Norte",
-        imagen: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        imagen: "https://res.cloudinary.com/daxglaqjg/image/upload/v1771799715/Sin_ti%CC%81tulo-1_iydwaa.jpg",
         descripcion: "Exclusivo desarrollo residencial con áreas verdes, seguridad 24/7 y amenidades de primera clase. Ideal para familias buscando confort y tranquilidad."
     },
     {
