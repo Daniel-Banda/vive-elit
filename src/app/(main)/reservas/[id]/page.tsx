@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import CalendarEmbed from "@/components/CalendarEmbed";
 
 // In a real app, this would come from a database or CMS.
 // We are hardcoding the available projects for now.
@@ -76,20 +77,10 @@ export default async function ProjectReservationPage({ params }: { params: Promi
 
                     {/* Formulario/Integración de Sistema de Reservas */}
                     {project.calendarUrl ? (
-                        <div className="w-full h-[600px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-white relative">
-                            {/* Loading State Overlay (Optional, but good for UX while iframe loads) */}
-                            <div className="absolute inset-0 flex items-center justify-center bg-slate-50 z-0">
-                                <div className="flex flex-col items-center gap-3">
-                                    <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                                    <p className="text-sm font-medium text-slate-500">Cargando calendario...</p>
-                                </div>
-                            </div>
-                            <iframe
-                                src={project.calendarUrl}
-                                className="w-full h-full border-none relative z-10"
-                                title={`Reserva para ${project.titulo}`}
-                            ></iframe>
-                        </div>
+                        <CalendarEmbed
+                            url={project.calendarUrl}
+                            title={`Reserva para ${project.titulo}`}
+                        />
                     ) : (
                         <div className="w-full h-[400px] flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 text-slate-500">
                             <p>Sistema de reservas próximo a implementarse.</p>
