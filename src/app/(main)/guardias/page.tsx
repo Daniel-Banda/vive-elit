@@ -12,7 +12,7 @@ const PROJECTS = [
         id: "magisterial-nogueras",
         titulo: "Magisterial Nogueras",
         ubicacion: "Zona Centro",
-        imagen: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        imagen: "https://res.cloudinary.com/daxglaqjg/image/upload/v1771799891/Plano_komamz.jpg",
         descripcion: "Proyecto residencial de alta plusvalía. Excelente ubicación con acceso rápido a vías principales, centros comerciales y zonas de interés."
     }
 ];
