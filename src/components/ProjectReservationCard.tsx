@@ -46,7 +46,7 @@ export default function ProjectReservationCard({ id, titulo, ubicacion, imagen, 
                 {/* Call to action */}
                 <div className="mt-auto pt-4">
                     <Link
-                        href={`/reservas/${id}`}
+                        href={`/guardias/${id}`}
                         className="flex items-center justify-between w-full bg-slate-900 hover:bg-blue-600 text-white px-6 py-4 rounded-xl text-xs font-bold uppercase tracking-widest transition-all shadow-md hover:shadow-blue-500/20 group/btn"
                     >
                         <span>Ver Disponibilidad</span>

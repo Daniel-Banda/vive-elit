@@ -66,7 +66,7 @@ export default async function ProjectReservationPage({ params }: { params: Promi
                             <p className="text-slate-500 text-sm mt-1">Selecciona la fecha y hora disponible para el proyecto {project.titulo}.</p>
                         </div>
                         <Link
-                            href="/reservas"
+                            href="/guardias"
                             className="text-slate-500 hover:text-blue-600 font-bold uppercase tracking-widest text-xs flex items-center gap-2 transition-colors px-6 py-3 bg-slate-50 rounded-xl hover:bg-blue-50 shrink-0"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
