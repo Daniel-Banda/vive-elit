@@ -18,7 +18,8 @@ const PROJECTS = [
         titulo: "Magisterial Nogueras",
         ubicacion: "Zona Centro",
         imagen: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
-        descripcion: "Proyecto residencial de alta plusvalía. Excelente ubicación con acceso rápido a vías principales, centros comerciales y zonas de interés."
+        descripcion: "Proyecto residencial de alta plusvalía. Excelente ubicación con acceso rápido a vías principales, centros comerciales y zonas de interés.",
+        calendarUrl: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3cjW7reKEGvafeiYPDc052fyoC9ofGTWR2EW546w63ytvqNAwOyJzT7U2w4abVBNXU9C4K1BcZ?gv=true"
     }
 ];
 
