@@ -10,7 +10,7 @@ const PROJECTS = [
         titulo: "San Angel",
         ubicacion: "Zona Norte",
         imagen: "https://res.cloudinary.com/daxglaqjg/image/upload/v1771799715/Sin_ti%CC%81tulo-1_iydwaa.jpg",
-        descripcion: "Exclusivo desarrollo residencial con áreas verdes, seguridad 24/7 y amenidades de primera clase. Ideal para familias buscando confort y tranquilidad.",
+        descripcion: "Exclusivo desarrollo residencial con áreas verdes, seguridad 24/7 y amenidades de primera clase. La guardia se divide en 2 turnos: el primero de 9:00am a 2:00pm y el segundo de 2:00pm a 7:00pm.",
         calendarUrl: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ10qo9TgBuK854gDLpC0Kqk6_oZDolq0bycOBkRDk-sEEFf64ky40D7_4zMwVkDc95Q1h5LOsqi?gv=true"
     },
     {
@@ -18,7 +18,7 @@ const PROJECTS = [
         titulo: "Magisterial Nogueras",
         ubicacion: "Zona Centro",
         imagen: "https://res.cloudinary.com/daxglaqjg/image/upload/v1771799891/Plano_komamz.jpg",
-        descripcion: "Proyecto residencial de alta plusvalía. Excelente ubicación con acceso rápido a vías principales, centros comerciales y zonas de interés.",
+        descripcion: "Proyecto residencial de alta plusvalía. La guardia se divide en 2 turnos: el primero de 9:00am a 1:30pm y el segundo de 1:30pm a 6:00pm.",
         calendarUrl: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3cjW7reKEGvafeiYPDc052fyoC9ofGTWR2EW546w63ytvqNAwOyJzT7U2w4abVBNXU9C4K1BcZ?gv=true"
     }
 ];
@@ -58,6 +58,9 @@ export default async function ProjectReservationPage({ params }: { params: Promi
                         <div>
                             <h2 className="text-2xl font-serif font-bold text-slate-900">Reservar Guardia</h2>
                             <p className="text-slate-500 text-sm mt-1">Selecciona la fecha y hora disponible para el proyecto {project.titulo}.</p>
+                            <div className="mt-4 bg-blue-50/80 p-4 rounded-xl border border-blue-100/50">
+                                <p className="text-blue-900 text-sm leading-relaxed">{project.descripcion}</p>
+                            </div>
                         </div>
                         <Link
                             href="/guardias"

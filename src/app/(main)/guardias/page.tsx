@@ -6,14 +6,14 @@ const PROJECTS = [
         titulo: "San Angel",
         ubicacion: "Zona Norte",
         imagen: "https://res.cloudinary.com/daxglaqjg/image/upload/v1771799715/Sin_ti%CC%81tulo-1_iydwaa.jpg",
-        descripcion: "Exclusivo desarrollo residencial con áreas verdes, seguridad 24/7 y amenidades de primera clase. Ideal para familias buscando confort y tranquilidad."
+        descripcion: "Exclusivo desarrollo residencial con áreas verdes, seguridad 24/7 y amenidades de primera clase. La guardia se divide en 2 turnos: el primero de 9:00am a 2:00pm y el segundo de 2:00pm a 7:00pm."
     },
     {
         id: "magisterial-nogueras",
         titulo: "Magisterial Nogueras",
         ubicacion: "Zona Centro",
         imagen: "https://res.cloudinary.com/daxglaqjg/image/upload/v1771799891/Plano_komamz.jpg",
-        descripcion: "Proyecto residencial de alta plusvalía. Excelente ubicación con acceso rápido a vías principales, centros comerciales y zonas de interés."
+        descripcion: "Proyecto residencial de alta plusvalía. La guardia se divide en 2 turnos: el primero de 9:00am a 1:30pm y el segundo de 1:30pm a 6:00pm."
     }
 ];
 

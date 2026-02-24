@@ -30,6 +30,9 @@ export default function ProjectReservationCard({ id, titulo, ubicacion, imagen, 
                     <h3 className="text-2xl font-serif font-bold text-slate-900 leading-tight mb-2 group-hover:text-blue-600 transition-colors">
                         {titulo}
                     </h3>
+                    <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
+                        {descripcion}
+                    </p>
                 </div>
 
                 {/* Call to action */}
