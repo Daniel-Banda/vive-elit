@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { slugify } from '@/lib/utils';
 
@@ -27,6 +27,18 @@ interface CatalogCardProps {
 
 export default function CatalogCard({ property, onImageClick }: CatalogCardProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const router = useRouter();
+
+    const hasDetailedPage = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 33].includes(property.ID as number);
+    const detailedPageUrl = property.ID === 2 ? "/SantosChocano" : `/catalogo/${slugify(property.Titulo)}`;
+
+    const handleImageAction = () => {
+        if (hasDetailedPage) {
+            router.push(detailedPageUrl);
+        } else {
+            onImageClick(fotos, currentImageIndex);
+        }
+    };
 
     const fotos = Array.isArray(property.Imagenes) && property.Imagenes.length > 0
         ? property.Imagenes
@@ -52,7 +64,7 @@ export default function CatalogCard({ property, onImageClick }: CatalogCardProps
                     src={fotos[currentImageIndex]}
                     alt={property.Titulo}
                     className="w-full h-full object-cover transition-transform duration-1000 cursor-pointer"
-                    onClick={() => onImageClick(fotos, currentImageIndex)}
+                    onClick={handleImageAction}
                     onContextMenu={(e) => e.preventDefault()}
                     draggable={false}
                 />
@@ -124,10 +136,10 @@ export default function CatalogCard({ property, onImageClick }: CatalogCardProps
                     {property.Construccion && <span>🏗️ {property.Construccion} m²</span>}
                 </div>
 
-                {[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 33].includes(property.ID as number) ? (
+                {hasDetailedPage ? (
                     <div className="mt-4 grid grid-cols-2 gap-2">
                         <Link
-                            href={property.ID === 2 ? "/SantosChocano" : `/catalogo/${slugify(property.Titulo)}`}
+                            href={detailedPageUrl}
                             className="bg-[#B0D1C7] hover:bg-slate-900 text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300 text-center flex items-center justify-center shadow-md hover:shadow-lg"
                         >
                             Ver Más
