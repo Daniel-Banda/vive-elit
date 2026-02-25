@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import Link from 'next/link';
+import { slugify } from '@/lib/utils';
 
 interface Property {
     ID?: number;
@@ -126,7 +127,7 @@ export default function CatalogCard({ property, onImageClick }: CatalogCardProps
                 {[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 33].includes(property.ID as number) ? (
                     <div className="mt-4 grid grid-cols-2 gap-2">
                         <Link
-                            href={property.ID === 2 ? "/SantosChocano" : `/propiedad/${property.ID}`}
+                            href={property.ID === 2 ? "/SantosChocano" : `/catalogo/${slugify(property.Titulo)}`}
                             className="bg-[#B0D1C7] hover:bg-slate-900 text-white text-[10px] font-bold py-3 rounded-xl uppercase tracking-widest transition-colors duration-300 text-center flex items-center justify-center shadow-md hover:shadow-lg"
                         >
                             Ver Más

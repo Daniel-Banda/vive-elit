@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getSupabase } from '@/lib/supabase';
+import { slugify } from '@/lib/utils';
 import { useParams } from 'next/navigation';
 import CatalogCard from '@/components/CatalogCard';
 import propertiesData from '@/data/propiedadesDetails.json';
@@ -26,7 +27,7 @@ import {
 
 export default function PropiedadPage() {
     const params = useParams();
-    const id = params?.id as string;
+    const slug = params?.slug as string;
 
     const [property, setProperty] = useState<any>(null);
     const [randomProperties, setRandomProperties] = useState<any[]>([]);
@@ -41,37 +42,33 @@ export default function PropiedadPage() {
 
     useEffect(() => {
         const fetchPropertyData = async () => {
-            if (!id) return;
+            if (!slug) return;
 
             try {
                 const supabase = getSupabase();
 
-                // Fetch main property
-                const { data: mainData, error: mainError } = await supabase
+                // Fetch all properties to match by slug locally since we don't have a slug column
+                const { data: allData, error: allError } = await supabase
                     .from('Propiedades')
-                    .select('*')
-                    .eq('ID', id)
-                    .single();
+                    .select('*');
 
-                if (mainError) {
-                    console.error('Error fetching property:', JSON.stringify(mainError, null, 2));
+                if (allError) {
+                    console.error('Error fetching properties:', JSON.stringify(allError, null, 2));
                     return;
                 }
 
-                if (mainData) {
-                    setProperty(mainData);
-                }
+                if (allData) {
+                    // Match by slugified title
+                    const matchedProperty: any = allData.find((p: any) => slugify(p.Titulo) === slug);
 
-                // Fetch other properties for recommendations
-                const { data: allData, error: allError } = await supabase
-                    .from('Propiedades')
-                    .select('*')
-                    .neq('ID', id);
+                    if (matchedProperty) {
+                        setProperty(matchedProperty);
 
-                if (!allError && allData) {
-                    // Shuffle array and take first 3
-                    const shuffled = [...allData].sort(() => 0.5 - Math.random());
-                    setRandomProperties(shuffled.slice(0, 3));
+                        // Fetch other properties for recommendations
+                        const otherProperties = allData.filter((p: any) => p.ID !== matchedProperty.ID);
+                        const shuffled = [...otherProperties].sort(() => 0.5 - Math.random());
+                        setRandomProperties(shuffled.slice(0, 3));
+                    }
                 }
 
             } catch (err) {
@@ -82,7 +79,7 @@ export default function PropiedadPage() {
         };
 
         fetchPropertyData();
-    }, [id]);
+    }, [slug]);
 
     const imagenes = property?.Imagenes || [];
     const heroImage = imagenes.length > 0 ? imagenes[0] : "https://res.cloudinary.com/daxglaqjg/image/upload/v1768366125/IMG_6187_qf4jud.jpg";
@@ -269,9 +266,9 @@ export default function PropiedadPage() {
                             </div>
                             <div className="w-full md:w-3/4">
                                 <div className="text-slate-700 text-[15px] leading-relaxed space-y-6">
-                                    {(propertiesData as any)[id]?.descripcion ? (
+                                    {(propertiesData as any)[property?.ID]?.descripcion ? (
                                         <div className="whitespace-pre-line">
-                                            {(propertiesData as any)[id].descripcion}
+                                            {(propertiesData as any)[property?.ID].descripcion}
                                         </div>
                                     ) : (
                                         <p>
@@ -287,8 +284,8 @@ export default function PropiedadPage() {
                                     <div>
                                         <p className="mb-4">Características Principales:</p>
                                         <ul className="space-y-1">
-                                            {(propertiesData as any)[id]?.caracteristicas ? (
-                                                (propertiesData as any)[id].caracteristicas.map((caracteristica: string, index: number) => (
+                                            {(propertiesData as any)[property?.ID]?.caracteristicas ? (
+                                                (propertiesData as any)[property?.ID].caracteristicas.map((caracteristica: string, index: number) => (
                                                     <li key={index}>- {caracteristica}</li>
                                                 ))
                                             ) : (
