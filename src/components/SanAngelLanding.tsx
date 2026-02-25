@@ -406,14 +406,14 @@ export default function SanAngelLanding({ propertyId }: SanAngelLandingProps) {
 
                     <div
                         className="relative w-full max-w-7xl h-full max-h-[90vh] flex items-center justify-center"
-                        onClick={(e) => e.stopPropagation()}
                     >
                         <img
                             src={imagenes[lightboxIndex]}
                             alt="Galería Pantalla Completa"
-                            className="max-w-full max-h-full object-contain rounded shadow-2xl"
+                            className="max-w-full max-h-full object-contain rounded shadow-2xl cursor-default"
                             onContextMenu={(e) => e.preventDefault()}
                             draggable={false}
+                            onClick={(e) => e.stopPropagation()}
                         />
 
                         {imagenes.length > 1 && (
