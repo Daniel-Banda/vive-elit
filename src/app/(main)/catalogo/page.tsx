@@ -22,8 +22,8 @@ function CatalogContent() {
   // --- ESTADOS DE LOS FILTROS ---
   const [filtros, setFiltros] = useState({
     ubicaciones: [] as string[],
-    precioMin: '50000',
-    precioMax: '100000000',
+    precioMin: '',
+    precioMax: '',
     tipos: [] as string[],
     recamaras: [] as number[],
     busqueda: ''
@@ -78,8 +78,8 @@ function CatalogContent() {
         ...prev,
         busqueda: term || '',
         recamaras: recs || [],
-        precioMin: minP || '50000',
-        precioMax: maxP || '100000000'
+        precioMin: minP || '',
+        precioMax: maxP || ''
       }))
     }
   }, [searchParams])
@@ -140,7 +140,7 @@ function CatalogContent() {
   }
 
   const limpiarFiltros = () => setFiltros({
-    ubicaciones: [], precioMin: '50000', precioMax: '100000000', tipos: [], recamaras: [], busqueda: ''
+    ubicaciones: [], precioMin: '', precioMax: '', tipos: [], recamaras: [], busqueda: ''
   })
 
   if (loading) return <div className="p-20 text-center font-serif text-slate-400 italic">Cargando Vive Elit...</div>
