@@ -12,6 +12,8 @@ import {
     ChevronLeft,
     ChevronRight,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface SanAngelLandingProps {
     propertyId: number | string;
@@ -19,7 +21,10 @@ interface SanAngelLandingProps {
 
 export default function SanAngelLanding({ propertyId }: SanAngelLandingProps) {
     const [property, setProperty] = useState<any>(null);
+    const [nextProperty, setNextProperty] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+
+    const pathname = usePathname();
 
     // Lightbox State
     const [openLightbox, setOpenLightbox] = useState(false);
@@ -47,6 +52,26 @@ export default function SanAngelLanding({ propertyId }: SanAngelLandingProps) {
                 if (mainData) {
                     setProperty(mainData);
                 }
+
+                if (pathname && pathname.startsWith("/san-angel-")) {
+                    const match = pathname.match(/\/san-angel-(\d+)/);
+                    if (match) {
+                        const currentPageNum = parseInt(match[1]);
+                        if (currentPageNum >= 1 && currentPageNum <= 10) {
+                            const nextPageNum = currentPageNum === 10 ? 1 : currentPageNum + 1;
+                            const nid = nextPageNum + 2;
+                            const { data: nextData, error: nextError } = await supabase
+                                .from("Propiedades")
+                                .select("Titulo, Precio, Imagenes")
+                                .eq("ID", nid)
+                                .single();
+
+                            if (nextData && !nextError) {
+                                setNextProperty({ ...(nextData as any), url: `/san-angel-${nextPageNum}` });
+                            }
+                        }
+                    }
+                }
             } catch (err) {
                 console.error("Supabase error:", err);
             } finally {
@@ -55,7 +80,7 @@ export default function SanAngelLanding({ propertyId }: SanAngelLandingProps) {
         };
 
         fetchPropertyData();
-    }, [propertyId]);
+    }, [propertyId, pathname]);
 
     const imagenes = property?.Imagenes || [];
     const heroImage =
@@ -378,6 +403,36 @@ export default function SanAngelLanding({ propertyId }: SanAngelLandingProps) {
                             referrerPolicy="no-referrer-when-downgrade"
                             title="Google Maps Street View"
                         ></iframe>
+                    </section>
+                )}
+
+                {/* 5. PREVIEW NEXT PROPERTY */}
+                {nextProperty && (
+                    <section className="mb-12">
+                        <Link href={nextProperty.url} className="block group">
+                            <div className="relative rounded-3xl overflow-hidden h-[30vh] min-h-[250px] shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl border border-slate-200">
+                                <div className="absolute inset-0 z-0 bg-slate-200">
+                                    <img
+                                        src={nextProperty.Imagenes?.[0] || heroImage}
+                                        alt={nextProperty.Titulo}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 transition-opacity duration-300 group-hover:via-black/50"></div>
+                                </div>
+                                <div className="absolute top-4 right-4 z-10 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/30 flex items-center gap-2 group-hover:bg-white/40 transition-colors">
+                                    <span className="text-white text-xs font-bold uppercase tracking-widest">Siguiente Propiedad</span>
+                                    <ChevronRight className="text-white" size={16} />
+                                </div>
+                                <div className="absolute bottom-6 left-6 right-6 z-10">
+                                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2 drop-shadow-lg group-hover:text-blue-100 transition-colors">
+                                        {nextProperty.Titulo}
+                                    </h3>
+                                    <p className="text-white/90 font-serif text-xl drop-shadow-md">
+                                        ${Number(nextProperty.Precio || 0).toLocaleString("en-US")} MXN
+                                    </p>
+                                </div>
+                            </div>
+                        </Link>
                     </section>
                 )}
             </div>
