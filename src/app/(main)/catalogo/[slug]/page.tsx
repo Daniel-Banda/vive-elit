@@ -337,6 +337,22 @@ export default function PropiedadPage() {
                     </section>
                 </div>
 
+                {/* GOOGLE MAPS STREET VIEW EMBED */}
+                {(propertiesData as any)[property?.ID]?.mapa && (
+                    <section className="mb-12 rounded-3xl overflow-hidden shadow-sm border border-slate-200 h-[60vh] min-h-[400px]">
+                        <iframe
+                            src={(propertiesData as any)[property?.ID].mapa}
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            allowFullScreen={true}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Google Maps Street View"
+                        ></iframe>
+                    </section>
+                )}
+
                 {/* 5. ACTION BUTTONS (No form) */}
                 <section className="bg-slate-900 rounded-3xl p-10 sm:p-14 text-center shadow-xl mb-12 flex flex-col items-center">
                     <h3 className="text-2xl sm:text-3xl font-serif text-white font-bold mb-4">
