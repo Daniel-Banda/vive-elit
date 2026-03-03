@@ -65,6 +65,9 @@ export default function Navbar() {
                     <Link href="/anunciar" className="hover:text-amber-400 transition-colors">
                         Anuncia tu propiedad
                     </Link>
+                    <Link href="/blog" className="hover:text-amber-400 transition-colors">
+                        Blog
+                    </Link>
                     <Link href="/contacto" className="hover:text-amber-400 transition-colors">
                         Contáctanos
                     </Link>
@@ -100,6 +103,9 @@ export default function Navbar() {
                     </Link>
                     <Link href="/anunciar" className="hover:text-amber-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
                         Anuncia tu propiedad
+                    </Link>
+                    <Link href="/blog" className="hover:text-amber-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                        Blog
                     </Link>
                     <Link href="/contacto" className="hover:text-amber-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
                         Contáctanos
