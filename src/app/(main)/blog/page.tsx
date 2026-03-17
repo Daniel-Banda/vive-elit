@@ -8,27 +8,35 @@ export const metadata = {
 const blogPosts = [
     {
         id: "1",
-        title: "5 Consejos para Elegir tu Primera Casa",
-        excerpt: "Comprar tu primera casa es un paso emocionante. Aquí te compartimos los mejores consejos para tomar la decisión correcta y encontrar el hogar de tus sueños.",
-        date: "15 de Octubre, 2024",
+        title: "¿Cómo comprar una casa en México? Guía paso a paso para 2026",
+        excerpt: "Todo lo que necesitas saber: tipos de crédito (Infonavit, bancario, Fovissste), costos reales, documentos necesarios y los errores más comunes al comprar tu primera propiedad.",
+        date: "Marzo 2026",
         image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        category: "Consejos"
+        category: "Guía de Compra"
     },
     {
         id: "2",
-        title: "Tendencias en Diseño de Interiores para 2024",
-        excerpt: "Descubre las últimas tendencias en decoración y diseño de interiores que están transformando los espacios residenciales este año.",
-        date: "28 de Septiembre, 2024",
-        image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        category: "Tendencias"
+        title: "No compres un terreno sin antes ver esto",
+        excerpt: "La lista definitiva de verificación legal, técnica y documental para no perder tu inversión. Certeza jurídica, gravámenes, servicios, uso de suelo y checklist completo.",
+        date: "Marzo 2026",
+        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        category: "Terrenos"
     },
     {
         id: "3",
-        title: "Los Mejores Barrios para Invertir en Bienes Raíces",
-        excerpt: "Una guía completa sobre las zonas con mayor plusvalía y desarrollo urbano, ideales para garantizar un excelente retorno de inversión.",
-        date: "10 de Septiembre, 2024",
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        category: "Inversiones"
+        title: "Terreno ejidal vs. terreno urbano: ¿cuál es el adecuado para ti?",
+        excerpt: "Dos tipos de propiedad, dos caminos distintos. Conoce sus diferencias, ventajas y qué debes considerar antes de decidir cuál se adapta mejor a tus objetivos.",
+        date: "Marzo 2026",
+        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        category: "Terrenos"
+    },
+    {
+        id: "4",
+        title: "¿Terreno o casa? Lo que te conviene según tu dinero",
+        excerpt: "No es una decisión emocional, es estratégica. Comparamos ambas opciones en inversión inicial, plusvalía, liquidez y financiamiento para que elijas con datos, no con corazonadas.",
+        date: "Marzo 2026",
+        image: "https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        category: "Inversión"
     }
 ];
 
